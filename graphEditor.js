@@ -162,9 +162,8 @@ function keyPressed(e) {
     if (selectedVertex != null) {
       selectedVertex.neighbers.map((vertex) => {
         popFromArray(vertex.neighbers, selectedVertex);
-        popFromArray(selectedVertex.neighbers, vertex);
       });
-      popFromArray(vertices, selectedVertex);
     }
+    popFromArray(vertices, selectedVertex);
   }
 }
