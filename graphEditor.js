@@ -14,6 +14,14 @@ var Vertex = class {
     this.dragging = false;
     this.selected = false;
     this.neighbers = [];
+    this.drawDegree = () => {
+      fill(0);
+      text(
+        this.neighbers.length,
+        this.x - textWidth(this.value) / 2,
+        this.y - 10
+      );
+    };
     this.drawVertex = () => {
       fill(255);
       if (this.selected) ellipse(this.x, this.y, this.size + 5, this.size + 5);
@@ -25,6 +33,10 @@ var Vertex = class {
         this.x - textWidth(this.value) / 2,
         this.y + textAscent() / 4
       );
+      textSize(15);
+      if (checkbox.checked()) {
+        this.drawDegree();
+      }
     };
   }
   mouseOver() {
@@ -37,7 +49,6 @@ var Vertex = class {
       return true;
     return false;
   }
-
   draw() {
     strokeWeight(2);
     this.neighbers.map((neighber) => {
@@ -51,7 +62,9 @@ var Vertex = class {
 var selectedVertex = null;
 var currentVertex = null;
 var vertices = [new Vertex(1, 50), new Vertex(2, 50, 100, 100)];
+var checkbox;
 function setup() {
+  checkbox = createCheckbox("showDegree", false);
   var instructions = createElement("div");
   var inp = createInput("");
   inp.elt.onkeydown = (e) => {
@@ -63,6 +76,7 @@ function setup() {
   inp.elt.clientTop = 50;
   inp.elt.clientLeft = 50;
 
+  instructions.child(checkbox);
   instructions.child(inp);
   fill(0);
   let p = createElement(
@@ -77,7 +91,7 @@ function setup() {
   );
   p.style("color", "#00a1d3");
   instructions.child(p);
-  instructions.style("margin","10px")
+  instructions.style("margin", "10px");
 }
 function draw() {
   var SCREEN_W = 300,
