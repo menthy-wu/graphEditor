@@ -1,3 +1,12 @@
+var vertexColor = {
+  blue: "#3bcde3",
+  purple: "#c23dff",
+  yellow: "#ffff00",
+  green: "#31f759",
+  white: 255,
+  orange: "#ffac38",
+  red: "255, 87, 109",
+};
 var popFromArray = function (arr, element) {
   var index = arr.indexOf(element);
   if (index > -1) {
@@ -14,6 +23,8 @@ var Vertex = class {
     this.dragging = false;
     this.selected = false;
     this.neighbers = [];
+    this.redNeigbers = [];
+    this.vertexColor = vertexColor["white"];
     this.drawDegree = () => {
       fill(0);
       text(
@@ -23,7 +34,7 @@ var Vertex = class {
       );
     };
     this.drawVertex = () => {
-      fill(255);
+      fill(this.vertexColor);
       if (this.selected) ellipse(this.x, this.y, this.size + 5, this.size + 5);
       ellipse(this.x, this.y, this.size, this.size);
       fill(0);
@@ -50,11 +61,20 @@ var Vertex = class {
     return false;
   }
   draw() {
+    stroke(0, 0, 0);
     strokeWeight(2);
     this.neighbers.map((neighber) => {
       line(this.x, this.y, neighber.x, neighber.y);
       neighber.drawVertex();
     });
+    strokeWeight(2);
+    this.redNeigbers.map((neighber) => {
+      stroke(255, 0, 0);
+      line(this.x, this.y, neighber.x, neighber.y);
+      stroke(0, 0, 0);
+      neighber.drawVertex();
+    });
+    stroke(0, 0, 0);
     this.drawVertex();
   }
 };
@@ -97,13 +117,28 @@ function setup() {
     "p",
     "Enter key here and press ENTER to create a new vertec. Select a vertex and press DELETE to delete the vertex"
   );
-  p.style("color", "#00a1d3");
+  p.style("vertexColor", "#00a1d3");
   instructions.child(p);
   p = createElement(
     "p",
     "Press SHIFT and click on two vertices to create an edge (same for delete edges)"
   );
-  p.style("color", "#00a1d3");
+  p.style("vertexColor", "#00a1d3");
+  instructions.child(p);
+  p = createElement("p", "Right click on two vertice: draw a red edge");
+  p.style("vertexColor", "#00a1d3");
+  instructions.child(p);
+  p = createElement(
+    "p",
+    'press "y" and click on a edge: paint the vertec yellow'
+  );
+  p.style("vertexColor", "#00a1d3");
+  instructions.child(p);
+  p = createElement(
+    "p",
+    "same for b: blue, p:purple, r:red, o:orange, g:green"
+  );
+  p.style("vertexColor", "#00a1d3");
   instructions.child(p);
   instructions.style("margin", "10px");
 }
@@ -120,12 +155,47 @@ function draw() {
   });
 }
 
-function mousePressed() {
+function mousePressed(e) {
   currentVertex = null;
   var clickOnVertex = false;
   vertices.map((vertex) => {
     if (vertex.mouseOver()) {
-      if (keyIsDown(SHIFT)) {
+      if (e.button == 2) {
+        if (selectedVertex != null && selectedVertex != vertex) {
+          if (!selectedVertex.redNeigbers.includes(vertex)) {
+            selectedVertex.redNeigbers.push(vertex);
+            vertex.redNeigbers.push(selectedVertex);
+          } else {
+            popFromArray(vertex.redNeigbers, selectedVertex);
+            popFromArray(selectedVertex.redNeigbers, vertex);
+          }
+        }
+      } else if (keyIsDown(89)) {
+        if (vertex.vertexColor == vertexColor.yellow)
+          vertex.vertexColor = vertexColor.white;
+        else vertex.vertexColor = vertexColor.yellow;
+      } else if (keyIsDown(66)) {
+        if (vertex.vertexColor == vertexColor.blue)
+          vertex.vertexColor = vertexColor.white;
+        else vertex.vertexColor = vertexColor.blue;
+      } else if (keyIsDown(80)) {
+        if (vertex.vertexColor == vertexColor.purple)
+          vertex.vertexColor = vertexColor.white;
+        else vertex.vertexColor = vertexColor.purple;
+      } else if (keyIsDown(71)) {
+        if (vertex.vertexColor == vertexColor.green)
+          vertex.vertexColor = vertexColor.white;
+        else vertex.vertexColor = vertexColor.green;
+      } else if (keyIsDown(82)) {
+        if (vertex.vertexColor == vertexColor.red)
+          vertex.vertexColor = vertexColor.white;
+        else vertex.vertexColor = vertexColor.red;
+      } else if (keyIsDown(79)) {
+        vertex.vertexColor =
+          vertex.vertexColor == vertexColor.orange
+            ? vertexColor.white
+            : vertexColor.orange;
+      } else if (keyIsDown(SHIFT)) {
         if (selectedVertex != null && selectedVertex != vertex) {
           if (!selectedVertex.neighbers.includes(vertex)) {
             selectedVertex.neighbers.push(vertex);
@@ -162,6 +232,7 @@ function keyPressed(e) {
     if (selectedVertex != null) {
       selectedVertex.neighbers.map((vertex) => {
         popFromArray(vertex.neighbers, selectedVertex);
+        popFromArray(vertex.redNeigbers, selectedVertex);
       });
     }
     popFromArray(vertices, selectedVertex);
