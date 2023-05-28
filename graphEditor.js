@@ -63,10 +63,20 @@ var selectedVertex = null;
 var currentVertex = null;
 var vertices = [new Vertex(1, 50), new Vertex(2, 50, 100, 100)];
 var checkbox;
+var vertexSize;
 function setup() {
   checkbox = createCheckbox("showDegree", false);
   var instructions = createElement("div");
+  var vertexSize = createInput("50", "number");
+  vertexSize.elt.onkeydown = (e) => {
+    if (e.key == "Enter") {
+      vertices.map((vertex) => {
+        vertex.size = parseInt(vertexSize.elt.value);
+      });
+    }
+  };
   var inp = createInput("");
+
   inp.elt.onkeydown = (e) => {
     if (e.key == "Enter") {
       vertices.push(new Vertex(inp.elt.value, 50));
@@ -77,6 +87,10 @@ function setup() {
   inp.elt.clientLeft = 50;
 
   instructions.child(checkbox);
+  instructions.child(createElement("label", "vertex size: "));
+  instructions.child(vertexSize);
+  instructions.child(createElement("div"));
+  instructions.child(createElement("label", "add vertex: "));
   instructions.child(inp);
   fill(0);
   let p = createElement(
