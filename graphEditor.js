@@ -112,7 +112,7 @@ function mousePressed() {
   vertices.map((vertex) => {
     if (vertex.mouseOver()) {
       if (keyIsDown(SHIFT)) {
-        if (selectedVertex != null) {
+        if (selectedVertex != null && selectedVertex != vertex) {
           if (!selectedVertex.neighbers.includes(vertex)) {
             selectedVertex.neighbers.push(vertex);
             vertex.neighbers.push(selectedVertex);
