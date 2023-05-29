@@ -34,6 +34,7 @@ var Vertex = class {
       );
     };
     this.drawVertex = () => {
+      strokeWeight(2);
       fill(this.vertexColor);
       if (this.selected) ellipse(this.x, this.y, this.size + 5, this.size + 5);
       ellipse(this.x, this.y, this.size, this.size);
@@ -49,6 +50,7 @@ var Vertex = class {
       if (checkbox.checked()) {
         this.drawDegree();
       }
+      strokeWeight(2);
     };
   }
   mouseOver() {
@@ -68,7 +70,6 @@ var Vertex = class {
       line(this.x, this.y, neighber.x, neighber.y);
       neighber.drawVertex();
     });
-    strokeWeight(2);
     this.redNeigbers.map((neighber) => {
       stroke(255, 0, 0);
       line(this.x, this.y, neighber.x, neighber.y);
