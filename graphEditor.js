@@ -37,6 +37,7 @@ var Vertex = class {
       fill(this.vertexColor);
       if (this.selected) ellipse(this.x, this.y, this.size + 5, this.size + 5);
       ellipse(this.x, this.y, this.size, this.size);
+      strokeWeight(0);
       fill(0);
       textSize(this.size / 2);
       text(
