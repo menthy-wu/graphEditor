@@ -5,7 +5,7 @@ var vertexColor = {
   green: "#31f759",
   white: 255,
   orange: "#ffac38",
-  red: "255, 87, 109",
+  red: "#ff576d",
 };
 var popFromArray = function (arr, element) {
   var index = arr.indexOf(element);
@@ -193,10 +193,9 @@ function mousePressed(e) {
           vertex.vertexColor = vertexColor.white;
         else vertex.vertexColor = vertexColor.red;
       } else if (keyIsDown(79)) {
-        vertex.vertexColor =
-          vertex.vertexColor == vertexColor.orange
-            ? vertexColor.white
-            : vertexColor.orange;
+        if (vertex.vertexColor == vertexColor.orange)
+          vertex.vertexColor = vertexColor.white;
+        else vertex.vertexColor = vertexColor.orange;
       } else if (keyIsDown(SHIFT)) {
         if (selectedVertex != null && selectedVertex != vertex) {
           if (!selectedVertex.neighbers.includes(vertex)) {
