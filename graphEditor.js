@@ -87,6 +87,9 @@ var vertices = [new Vertex(1, 50), new Vertex(2, 50, 100, 100)];
 var checkbox;
 var vertexSize;
 function setup() {
+  for (let element of document.getElementsByClassName("p5Canvas")) {
+    element.addEventListener("contextmenu", (e) => e.preventDefault());
+  }
   checkbox = createCheckbox("showDegree", false);
   var instructions = createElement("div");
   var vertexSize = createInput("50", "number");
