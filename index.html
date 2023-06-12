@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>GraphEditor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"
+      rel="stylesheet"
+    />
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"
       integrity="sha512-3WFaXQUsbGieECwv3t3DvyAkZ7pp+/rIKOQnx7NKhfwIF0u2l+DYsE2eF635ewJVj3YTU4/Ug6UqEkSTZCiSew=="
@@ -14,6 +20,67 @@
     <script src="./graphEditor.js"></script>
   </head>
   <body>
+    <div class="nav">
+      <a class="gitHub" href="https://github.com/menthy-wu/graphEditor">
+        gitHub
+      </a>
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 20px;
+      "
+    >
+      <div style="margin: 20px">
+        <div style="display: flex; flex-direction: column">
+          <label>add a new vertex</label
+          ><input
+            class="newVertex"
+            type="text"
+            style="
+              border: 1px solid #000000;
+              border-radius: 99999px;
+              padding: 5px;
+            "
+          />
+        </div>
+        <div style="display: flex; flex-direction: column">
+          <label>vertex size</label
+          ><input
+            class="vertexSize"
+            value="50"
+            type="number"
+            style="
+              border: 1px solid #000000;
+              border-radius: 99999px;
+              padding: 5px;
+              background-color: #fff;
+              width: 100%;
+            "
+          />
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            class="showDegree"
+            style="border: 1px solid #000000; border-radius: 5px; padding: 5px"
+          />
+          <label>show degrees</label>
+        </div>
+        <div>
+          <input class="directed" type="checkbox" />
+          <label>directed</label>
+        </div>
+        <div class="colorList"></div>
+        <button class="resetColor">reset color</button>
+      </div>
+      <div
+        id="canvas"
+        style="border: 1px solid #000000; border-radius: 10px; padding: 5px"
+      ></div>
+    </div>
     <script defer src="graphEditor.js"></script>
   </body>
 </html>
